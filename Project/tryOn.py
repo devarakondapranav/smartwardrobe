@@ -14,6 +14,7 @@ import math
 def put_sprite(num):
     global SPRITES, BTNS
     SPRITES[num] = (1 - SPRITES[num]) 
+    print(SPRITES)
     # if SPRITES[num]:
     #     BTNS[num].config(relief=SUNKEN)
     # else:
@@ -164,20 +165,24 @@ def cvloop(run_event):
                 apply_sprite(image, image_path,w3,x3+20,y3+25, incl)
             
             if SPRITES[5]:
+                print("hello")
                 findRects = []
-                upperPath = "/home/admin1/Documents/Flipkart_Hackathon/BodyDetection/haarcascades_cuda/haarcascade_upperbody.xml"
-                imageGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                upperPath = "D:\\projects\\E-Dressing\\Project\\data\\haarcascade_upperbody.xml"
+                imageGray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
                 upperCascade = cv2.CascadeClassifier(upperPath)
                 upperRect = upperCascade.detectMultiScale(imageGray, scaleFactor=1.1, minNeighbors=1, minSize=(1,1)) 
+                print(upperRect)
 
                 if len(upperRect) > 0:
+                    print("true")
                     findRects.append(upperRect[0])
                     print(findRects)
                 
                 for obj in findRects:
                     print(obj)
-                    # img = cv2.rectangle(img, (obj[0],obj[1]), (obj[0]+obj[2], obj[1]+obj[3]), (0, 255, 0), 2)
-                    draw_sprite(image,obj[0],obj[1])
+                    print(obj)
+                    img = cv2.rectangle(image, (obj[0],obj[1]), (obj[0]+obj[2], obj[1]+obj[3]), (0, 255, 0), 2)
+                    # apply_sprite(image, image_path,obj[0],obj[1], incl)
 
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = Image.fromarray(image)
